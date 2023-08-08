@@ -52,7 +52,9 @@
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^7.0.0",
     "ember-resolver": "^10.1.1",
+    "ember-resources": "^5.6.0",
     "ember-source": "~5.1.1",
+    "ember-statecharts": "workspace:^",
     "ember-template-lint": "^5.11.0",
     "ember-welcome-page": "^7.0.2",
     "eslint": "^8.43.0",
@@ -69,7 +71,8 @@
     "stylelint-config-standard": "^33.0.0",
     "stylelint-prettier": "^3.0.0",
     "tracked-built-ins": "^3.1.1",
-    "webpack": "^5.88.1"
+    "webpack": "^5.88.1",
+    "xstate": "^4.38.2"
   },
   "engines": {
     "node": "16.* || >= 18"

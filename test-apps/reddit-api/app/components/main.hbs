@@ -1,0 +1,36 @@
+{{!-- TODO: figure out why this.redditMachine.id doesn't work. --}}
+<main
+  data-machine={{this.redditMachine.state.machine.id}}
+  data-state={{this.redditMachine.state.value}}
+  ...attributes
+>
+  <div>Main state is "{{this.redditMachine.state.value}}"</div>
+  <div>Subreddit count is {{this.redditMachine.state.context.subreddits.length}}</div>
+  <header>
+    <button
+      type="button"
+      {{on "click" (fn this.selectSubreddit "reactjs")}}
+    >
+      reactjs
+    </button>
+    <button
+      type="button"
+      {{on "click" (fn this.selectSubreddit "frontend")}}
+    >
+      frontend
+    </button>
+  </header>
+  <div>
+    {{#if (this.redditMachine.state.matches "idle") }}
+      <h1>Select a subreddit</h1>
+    {{else}}
+      Subreddit selected (id is {{this.redditMachine.state.context.subreddit.id}})
+      {{log "this.redditMachine.state.context" this.redditMachine.state.context}}
+      <Subreddit
+        @service={{this.redditMachine.state.context.subreddit}}
+      />
+
+    {{/if}}
+
+  </div>
+</main>

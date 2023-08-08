@@ -1,0 +1,18 @@
+{{!-- NOTE: The word "service" here is the xstate term for a machine.  It is completely unrelated to Ember's service concept. --}}
+<section
+  data-machine={{@service.id}}
+  data-state={{@service.state.value}}
+>
+
+  <div>?? {{this.okOrNot.phony}}</div>
+
+  {{#if (@service.state.matches "loading") }}
+    <div>Loading posts...</div>
+  {{/if}}
+
+State is: {{@service.state.value}}
+<br>
+misc is: {{this.subredditMachine.state.context.misc}}
+
+
+</section>
