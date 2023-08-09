@@ -6,25 +6,31 @@ const dateTimeFormat = new Intl.DateTimeFormat('en-US', {
   timeStyle: 'long',
 });
 
-export default class SubredditComponent extends Component {
+interface SubredditSignature {
+  Args: {
+    subreddit: string;
+  };
+  Element: HTMLElement;
+}
+
+export default class SubredditComponent extends Component<SubredditSignature> {
+  // @ts-expect-error Not sure how to fix these types
   subredditMachine = useMachine(this, () => {
-    const machine = createSubredditMachine(this.args.subreddit).withConfig({
-      actions: {},
-    });
+    // const machine = createSubredditMachine(this.args.subreddit);
 
     return {
-      machine,
+      machine: createSubredditMachine(this.args.subreddit),
       onTransition(state) {
         console.log(`[subreddit] onTransition - ${state.value}`);
       },
-      // hours of debugging, then I found this:
+      // When the args change, restart the machine with the new subreddit
       update: ({ restart }) => {
         restart();
       },
     };
   });
 
-  formatDate = (timestamp) => {
+  formatDate = (timestamp: number) => {
     return dateTimeFormat.format(timestamp);
   };
 
