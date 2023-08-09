@@ -12,12 +12,17 @@ export default class MainComponent extends Component {
     return {
       machine,
       onTransition(state) {
-        console.log(`onTransition - ${state.value}`);
+        console.log(`[main] onTransition - ${state.value}`);
       },
     };
   });
 
-  selectSubreddit = (name) => {
-    this.redditMachine.send('SELECT', { name });
+  get subreddits() {
+    // Sometimes these work, sometimes they return CORS errors
+    return ['emberjs', 'reactjs', 'vuejs', 'frontend'];
+  }
+
+  selectSubreddit = (evt) => {
+    this.redditMachine.send('SELECT', { name: evt.target.value });
   };
 }

@@ -1,23 +1,25 @@
-import { Machine, assign, createMachine } from 'xstate';
+import { assign, createMachine } from 'xstate';
+// import { data } from './data-snapshot';
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// async function invokeFetchSubreddit() {
+//   await sleep(1500);
+//   // fail 50% of the time
+//   if (Math.random() < 0.5) {
+//     throw new Error('Failed to fetch subreddit');
+//   }
+//   return data.data.children.map((child) => child.data);
+// }
 
 async function invokeFetchSubreddit(context) {
   const { subreddit } = context;
-  debugger;
-  return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+
+  return fetch(`https://api.reddit.com/r/${subreddit}.json`)
     .then((response) => response.json())
     .then((json) => json.data.children.map((child) => child.data));
 }
 
-async function sayHowdy(context) {
-  console.log('howdy - child');
-}
-
-function temporaryLogOnEntryForLoading(context) {
-  // debugger
-  console.log('temporaryLogOnEntryForLoading', context);
-}
-
-export const createSubredditMachine = (subreddit) => {
+export function createSubredditMachine(subreddit) {
   return createMachine({
     id: 'subreddit',
     initial: 'loading',
@@ -25,26 +27,20 @@ export const createSubredditMachine = (subreddit) => {
       subreddit, // subreddit name passed in
       posts: null,
       lastUpdated: null,
-      misc: 'nada',
     },
     states: {
       loading: {
-        entry: [temporaryLogOnEntryForLoading],
-        // invoke: {
-        //   id: 'fetch-subreddit',
-        //   src: () => invokeFetchSubreddit,
-        //   // onDone: {
-        //   //   target: 'loaded',
-        //   //   actions: assign({
-        //   //     posts: (_, event) => event.data,
-        //   //     lastUpdated: () => Date.now(),
-        //   //   }),
-        //   // },
-        //   // onError: 'failure',
-        // },
         invoke: {
-          id: 'say-hello-child-level',
-          src: () => sayHowdy,
+          id: 'fetch-subreddit',
+          src: invokeFetchSubreddit,
+          onDone: {
+            target: 'loaded',
+            actions: assign({
+              posts: (_, event) => event.data,
+              lastUpdated: () => Date.now(),
+            }),
+          },
+          onError: 'failure',
         },
       },
       loaded: {
@@ -59,4 +55,4 @@ export const createSubredditMachine = (subreddit) => {
       },
     },
   });
-};
+}

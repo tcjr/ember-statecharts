@@ -1,18 +1,42 @@
-{{!-- NOTE: The word "service" here is the xstate term for a machine.  It is completely unrelated to Ember's service concept. --}}
 <section
-  data-machine={{@service.id}}
-  data-state={{@service.state.value}}
+  data-machine={{this.subredditMachine.state.machine.id}}
+  data-state={{this.subredditMachine.state.value}}
+  ...attributes
 >
 
-  <div>?? {{this.okOrNot.phony}}</div>
-
-  {{#if (@service.state.matches "loading") }}
+  {{#if (this.subredditMachine.state.matches "loading") }}
     <div>Loading posts...</div>
   {{/if}}
 
-State is: {{@service.state.value}}
-<br>
-misc is: {{this.subredditMachine.state.context.misc}}
+  {{#if (this.subredditMachine.state.matches "loaded") }}
+    <header>
+      <h3 class="capitalize text-xl font-bold text-gray-900">{{@subreddit}}</h3>
 
+      <small>
+        Last updated: {{this.formatDate this.subredditMachine.state.context.lastUpdated}}
+        <button {{on "click" this.refreshSubreddit}} type="button"
+          class="bg-blue-500 hover:bg-blue-700 text-xs ml-1 text-white px-2 py-1 rounded-full"
+        >Refresh</button>
+      </small>
+    </header>
+    <ul>
+      {{#each this.subredditMachine.state.context.posts as |post|}}
+        <li class="p-4 border-b-2">
+          <span>{{post.title}}</span>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if (this.subredditMachine.state.matches "failure") }}
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+      <p>Could not load posts</p>
+      <button {{on "click" this.retrySubreddit}} type="button"
+        class="bg-blue-500 hover:bg-blue-700 mt-4 text-white px-4 py-2 rounded-full"
+      >Retry</button>
+    </div>
+  {{/if}}
+
+  {{!-- State is: {{this.subredditMachine.state.value}} --}}
 
 </section>

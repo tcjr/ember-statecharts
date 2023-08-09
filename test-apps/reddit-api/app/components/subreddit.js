@@ -1,16 +1,38 @@
 import Component from '@glimmer/component';
-//import { useMachine } from 'ember-statecharts';
-import { howAboutThis, useMachine } from 'ember-statecharts';
+import { useMachine } from 'ember-statecharts';
+import { createSubredditMachine } from '../machines/subredditMachine';
+
+const dateTimeFormat = new Intl.DateTimeFormat('en-US', {
+  timeStyle: 'long',
+});
 
 export default class SubredditComponent extends Component {
   subredditMachine = useMachine(this, () => {
-    console.log('service machine is', this.args.service);
+    const machine = createSubredditMachine(this.args.subreddit).withConfig({
+      actions: {},
+    });
+
     return {
-      machine: this.args.service,
+      machine,
+      onTransition(state) {
+        console.log(`[subreddit] onTransition - ${state.value}`);
+      },
+      // hours of debugging, then I found this:
+      update: ({ restart }) => {
+        restart();
+      },
     };
   });
 
-  okOrNot = howAboutThis(this, () => {});
+  formatDate = (timestamp) => {
+    return dateTimeFormat.format(timestamp);
+  };
 
-  // subredditMachine = this.args.service;
+  retrySubreddit = () => {
+    this.subredditMachine.send('RETRY');
+  };
+
+  refreshSubreddit = () => {
+    this.subredditMachine.send('REFRESH');
+  };
 }
