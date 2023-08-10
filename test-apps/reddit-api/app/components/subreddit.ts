@@ -16,8 +16,6 @@ interface SubredditSignature {
 export default class SubredditComponent extends Component<SubredditSignature> {
   // @ts-expect-error Not sure how to fix these types
   subredditMachine = useMachine(this, () => {
-    // const machine = createSubredditMachine(this.args.subreddit);
-
     return {
       machine: createSubredditMachine(this.args.subreddit),
       onTransition(state) {
