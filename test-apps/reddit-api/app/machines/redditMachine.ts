@@ -9,11 +9,15 @@ export type RedditEvent = {
   name: string;
 };
 
-export const redditMachine = createMachine<RedditContext, RedditEvent>({
+export default createMachine<RedditContext, RedditEvent>({
   id: 'reddit',
   initial: 'idle',
   context: {
     subreddit: null,
+  },
+  schema: {
+    context: {} as RedditContext,
+    events: {} as RedditEvent,
   },
   states: {
     idle: {},
@@ -27,4 +31,5 @@ export const redditMachine = createMachine<RedditContext, RedditEvent>({
       }),
     },
   },
+  predictableActionArguments: true,
 });

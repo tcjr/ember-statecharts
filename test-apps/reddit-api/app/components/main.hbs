@@ -1,6 +1,6 @@
 <main
-  data-machine={{this.redditMachine.state.machine.id}}
-  data-state={{this.redditMachine.state.value}}
+  data-machine={{this.machineAttr}}
+  data-state={{this.stateAttr}}
   ...attributes
 >
   <header class="p-4 bg-blue-500">
@@ -12,13 +12,13 @@
     </select>
   </header>
   
-  {{#if (this.redditMachine.state.matches "idle") }}
+  {{#if (this.isInState "idle") }}
     <section class="p-6">
       <h1 class="capitalize text-xl font-bold text-gray-900">Select a subreddit</h1>
     </section>
   {{else}}
     <Subreddit
-      @subreddit={{this.redditMachine.state.context.subreddit}}
+      @subreddit={{this.context.subreddit}}
       class="p-6"
     />
   {{/if}}

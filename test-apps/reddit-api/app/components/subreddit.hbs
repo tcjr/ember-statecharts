@@ -1,26 +1,36 @@
 {{page-title @subreddit}}
 <section
-  data-machine={{this.subredditMachine.state.machine.id}}
-  data-state={{this.subredditMachine.state.value}}
+  data-machine={{this.machineAttr}}
+  data-state={{this.stateAttr}}
   ...attributes
 >
-  {{#if (this.subredditMachine.state.matches "loading") }}
+
+  {{#if (this.isInState "setup")}}
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+      <p>No loader configured for getting the data</p>
+    </div>
+  {{/if}}
+
+  {{#if (this.isInState "loading")}}
     <div>Loading posts...</div>
   {{/if}}
 
-  {{#if (this.subredditMachine.state.matches "loaded") }}
+  {{#if (this.isInState "loaded")}}
     <header>
       <h3 class="capitalize text-xl font-bold text-gray-900">{{@subreddit}}</h3>
 
       <small>
-        Last updated: {{this.formatDate this.subredditMachine.state.context.lastUpdated}}
-        <button {{on "click" this.refreshSubreddit}} type="button"
+        Last updated:
+        {{this.formatDate this.context.lastUpdated}}
+        <button
+          {{on "click" this.refreshSubreddit}}
+          type="button"
           class="bg-blue-500 hover:bg-blue-700 text-xs ml-1 text-white px-2 py-1 rounded-full"
         >Refresh</button>
       </small>
     </header>
     <ul>
-      {{#each this.subredditMachine.state.context.posts as |post|}}
+      {{#each this.context.posts as |post|}}
         <li class="p-4 border-b-2">
           <span>{{post.title}}</span>
         </li>
@@ -28,10 +38,12 @@
     </ul>
   {{/if}}
 
-  {{#if (this.subredditMachine.state.matches "failure") }}
+  {{#if (this.isInState "failure")}}
     <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
       <p>Could not load posts</p>
-      <button {{on "click" this.retrySubreddit}} type="button"
+      <button
+        {{on "click" this.retrySubreddit}}
+        type="button"
         class="bg-blue-500 hover:bg-blue-700 mt-4 text-white px-4 py-2 rounded-full"
       >Retry</button>
     </div>
