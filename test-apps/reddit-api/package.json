@@ -20,7 +20,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "lint:types": "tsc --noEmit",
+    "lint:types": "glint",
+    "old-lint-types": "tsc --noEmit",
     "start": "ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
@@ -36,6 +37,10 @@
     "@embroider/webpack": "^3.1.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@glint/core": "^1.0.2",
+    "@glint/environment-ember-loose": "^1.0.2",
+    "@glint/environment-ember-template-imports": "^1.0.2",
+    "@glint/template": "^1.0.2",
     "@tsconfig/ember": "^3.0.0",
     "@types/ember": "^4.0.4",
     "@types/ember-data": "^4.4.11",
@@ -86,6 +91,7 @@
     "ember-resources": "^5.6.0",
     "ember-source": "~5.1.1",
     "ember-statecharts": "workspace:^",
+    "ember-template-imports": "^3.4.2",
     "ember-template-lint": "^5.11.0",
     "ember-welcome-page": "^7.0.2",
     "eslint": "^8.43.0",
@@ -96,6 +102,7 @@
     "eslint-plugin-qunit": "^8.0.0",
     "loader.js": "^4.7.0",
     "prettier": "^2.8.8",
+    "prettier-plugin-ember-template-tag": "^1.0.2",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
     "stylelint": "^15.9.0",
@@ -111,5 +118,15 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependenciesMeta": {
+    "@glimmer/component": {
+      "injected": true
+    }
+  },
+  "peerDependenciesMeta": {
+    "@glimmer/component": {
+      "injected": true
+    }
   }
 }

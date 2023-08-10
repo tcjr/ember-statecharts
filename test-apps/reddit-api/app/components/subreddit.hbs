@@ -1,6 +1,7 @@
 {{page-title @subreddit}}
 <section
   data-machine={{this.subredditMachine.state.machine.id}}
+  {{! @glint-expect-error: I need a string here. }}
   data-state={{this.subredditMachine.state.value}}
   ...attributes
 >
@@ -13,6 +14,7 @@
       <h3 class="capitalize text-xl font-bold text-gray-900">{{@subreddit}}</h3>
 
       <small>
+        {{! @glint-expect-error: Once I figure out how to declare the type for subredditMachine, then context.lastUpdated should have a type }}
         Last updated: {{this.formatDate this.subredditMachine.state.context.lastUpdated}}
         <button {{on "click" this.refreshSubreddit}} type="button"
           class="bg-blue-500 hover:bg-blue-700 text-xs ml-1 text-white px-2 py-1 rounded-full"
@@ -20,6 +22,7 @@
       </small>
     </header>
     <ul>
+      {{! @glint-expect-error: Once I figure out how to declare the type for subredditMachine, then context.posts should have a type }}
       {{#each this.subredditMachine.state.context.posts as |post|}}
         <li class="p-4 border-b-2">
           <span>{{post.title}}</span>

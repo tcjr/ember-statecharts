@@ -3,7 +3,7 @@ import { redditMachine } from 'reddit-api/machines/redditMachine';
 import { useMachine } from 'ember-statecharts';
 
 interface MainComponentSignature {
-  Element: HTMLDivElement;
+  Element: HTMLElement;
 }
 
 export default class MainComponent extends Component<MainComponentSignature> {
@@ -33,4 +33,10 @@ export default class MainComponent extends Component<MainComponentSignature> {
       this.redditMachine.send('SELECT', { name: value });
     }
   };
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    Main: typeof MainComponent;
+  }
 }

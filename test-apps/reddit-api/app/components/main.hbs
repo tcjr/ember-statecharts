@@ -1,5 +1,6 @@
 <main
   data-machine={{this.redditMachine.state.machine.id}}
+  {{! @glint-expect-error: The state value should be a string, but glint complains that it needs to be safe. Should I use a helper? }}
   data-state={{this.redditMachine.state.value}}
   ...attributes
 >
@@ -18,6 +19,7 @@
     </section>
   {{else}}
     <Subreddit
+      {{! @glint-expect-error: The redditMachine is not typed correctly, so neither is the context. }}
       @subreddit={{this.redditMachine.state.context.subreddit}}
       class="p-6"
     />

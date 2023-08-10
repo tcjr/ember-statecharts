@@ -1,26 +1,21 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
   "compilerOptions": {
-
     // The combination of `baseUrl` with `paths` allows Ember's classic package
     // layout, which is not resolvable with the Node resolution algorithm, to
     // work with TypeScript.
+    "resolveJsonModule": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "reddit-api/tests/*": [
-        "tests/*"
-      ],
-      "reddit-api/*": [
-        "app/*"
-      ],
-      "*": [
-        "types/*"
-      ]
+      "reddit-api/tests/*": ["tests/*"],
+      "reddit-api/*": ["app/*"],
+      "*": ["types/*"]
     }
   },
-  "include": [
-    "app/**/*",
-    "tests/**/*",
-    "types/**/*"
-  ]
+  "glint": {
+    "environment": ["ember-loose", "ember-template-imports"]
+  },
+  "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

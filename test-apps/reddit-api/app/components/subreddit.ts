@@ -40,3 +40,9 @@ export default class SubredditComponent extends Component<SubredditSignature> {
     this.subredditMachine.send('REFRESH');
   };
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    Subreddit: typeof SubredditComponent;
+  }
+}
