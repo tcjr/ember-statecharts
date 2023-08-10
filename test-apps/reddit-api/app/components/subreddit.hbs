@@ -1,9 +1,9 @@
+{{page-title @subreddit}}
 <section
   data-machine={{this.subredditMachine.state.machine.id}}
   data-state={{this.subredditMachine.state.value}}
   ...attributes
 >
-
   {{#if (this.subredditMachine.state.matches "loading") }}
     <div>Loading posts...</div>
   {{/if}}
@@ -36,7 +36,4 @@
       >Retry</button>
     </div>
   {{/if}}
-
-  {{!-- State is: {{this.subredditMachine.state.value}} --}}
-
 </section>

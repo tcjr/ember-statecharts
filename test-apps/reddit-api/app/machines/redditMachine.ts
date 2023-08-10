@@ -1,6 +1,15 @@
 import { assign, createMachine } from 'xstate';
 
-export const redditMachine = createMachine({
+export interface RedditContext {
+  subreddit: string | null;
+}
+
+export type RedditEvent = {
+  type: 'SELECT';
+  name: string;
+};
+
+export const redditMachine = createMachine<RedditContext, RedditEvent>({
   id: 'reddit',
   initial: 'idle',
   context: {
@@ -14,7 +23,7 @@ export const redditMachine = createMachine({
     SELECT: {
       target: '.selected',
       actions: assign({
-        subreddit: (context, event) => event.name,
+        subreddit: (_context, event) => event.name,
       }),
     },
   },
