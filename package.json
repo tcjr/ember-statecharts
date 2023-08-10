@@ -7,9 +7,10 @@
   "scripts": {
     "prepare": "pnpm build",
     "build": "pnpm --filter ember-statecharts build",
-    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow,magenta",
     "start:tests": "pnpm --filter test-app start",
-    "start:test-ts": "pnpm --filter test-app-ts start --port=0",
+    "start:test-ts": "pnpm --filter test-app-ts start --port=4201",
+    "start:test-reddit": "pnpm --filter reddit-api start --port=4202",
     "start:addon": "pnpm --filter ember-statecharts start --no-watch.clearScreen",
     "test": "pnpm --filter='test-app*' test",
     "lint": "pnpm --filter '*' lint",
